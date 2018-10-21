@@ -1,0 +1,59 @@
+{% extends '../base.html' %}
+
+{% block content %}
+
+    <section class="content-header">
+      <h1>
+        Provas
+      </h1>
+      <ol class="breadcrumb">
+        <li class="active"><i class="fas fa-file"></i> Provas</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Lista de Provas</h3>
+        </div>
+        <div class="box-body">
+            {% if provas|length != 0 %}
+            <table class="table" style="margin-top: 5%;">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nome da Prova</th>
+                  <th scope="col">Quantidade de Questões</th>
+                  <th scope="col">Disciplina</th>
+                  <th scope="col">Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for prova in provas %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ prova.nome }}</td>
+                  <td>{{ prova.questoes.all|length }}</td>
+                  <td>{{ prova.disciplina }}</td>
+                  <td><a href="{% url 'questoes:detalhes-prova' prova.pk %}">Ver Prova</a></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+            <div style="text-align: center; margin-top: 5%;">
+                <h3>O usuário ainda não criou provas!</h3>
+            </div>
+            {% endif %}
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+
+{% endblock %}

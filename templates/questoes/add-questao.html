@@ -1,0 +1,79 @@
+{% extends '../base.html' %}
+
+{% block content %}
+
+    <section class="content-header">
+      <h1>
+        Questões
+      </h1>
+      <ol class="breadcrumb">
+        <li class="active"><i class="fas fa-plus"></i> Adicionar Questão</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Adicionar Questão</h3>
+        </div>
+        <div class="box-body">
+            <form method="post" action="{% url 'questoes:add-questao' %}">
+          {% csrf_token %}
+            {{ form.as_p }}
+            <a class="btn btn-danger" href="{% url 'questoes:disciplinas' %}">Cancelar</a>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+            </form>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+{% endblock %}
+
+<div class="form-group">
+                <label for="professor">Professor(a)</label>
+                <select class="form-control" name="professor" required id="professor">
+                    <option value="{{ request.user.pk }}">{{ request.user.first_name }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="disciplina">Disciplina</label>
+                <select class="form-control" name="disciplina" required id="disciplina">
+                    {% for disciplina in disciplinas %}
+                    <option value="{{ disciplina.pk }}">{{ disciplina.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="enunciado">Enunciado</label>
+              <textarea class="form-control" id="enunciado" rows="3" name="enunciado"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="imagem">Imagem (opcional)</label>
+                <input type="file" class="form-control-file" id="imagem" name="imagem" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="alternativa1">1ª Alternativa</label>
+                <input type="text" class="form-control" id="alternativa1" name="alternativa_um" maxlength="255">
+            </div>
+            <div class="form-group">
+                <label for="alternativa2">2ª Alternativa</label>
+                <input type="text" class="form-control" id="alternativa2" name="alternativa_dois" maxlength="255">
+            </div>
+            <div class="form-group">
+                <label for="alternativa3">3ª Alternativa</label>
+                <input type="text" class="form-control" id="alternativa3" name="alternativa_tres" maxlength="255">
+            </div>
+            <div class="form-group">
+                <label for="alternativa4">4ª Alternativa</label>
+                <input type="text" class="form-control" id="alternativa4" name="alternativa_quatro" maxlength="255">
+            </div>
+            <div class="form-group">
+                <label for="correta">Alternativa Correta</label>
+                <input type="text" class="form-control" id="correta" name="correta" maxlength="255">
+            </div>

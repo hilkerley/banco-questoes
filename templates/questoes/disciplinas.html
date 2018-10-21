@@ -1,0 +1,85 @@
+{% extends '../base.html' %}
+
+{% block content %}
+
+    <section class="content-header">
+      <h1>
+        Disciplinas
+      </h1>
+      <ol class="breadcrumb">
+        <li class="active"><i class="fas fa-brain"></i> Disciplinas</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Lista de Disciplinas</h3>
+        </div>
+        <div class="box-body">
+            <!-- Button modal add disciplina -->
+            <div style="float: right">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#disciplinaModal">
+                    Adicionar Disciplina
+                </button>
+            </div>
+            {% if disciplinas|length != 0 %}
+            <table class="table" style="margin-top: 5%;">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for disciplina in disciplinas %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ disciplina.nome }}</td>
+                  <td><a href="{% url 'questoes:detalhes-disciplina' disciplina.pk %}">Ver Disciplina</a></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+            <div style="text-align: center; margin-top: 5%;">
+                <h3>O usuário não tem disciplinas cadastradas!</h3>
+            </div>
+            {% endif %}
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+
+<!-- Modal add Disciplina -->
+<div class="modal fade" id="disciplinaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Adicionar Disciplina</h3>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'questoes:disciplinas' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="nome">Nome da Disciplina</label>
+            <input type="text" class="form-control" id="nome" placeholder="Matemática" name="nome">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-success">Adicionar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
